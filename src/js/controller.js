@@ -27,9 +27,12 @@ const renderSpinner = function (parentEl) {
 };
 const showRecipe = async function () {
   try {
+    //Slice used to remove "#" in beginning
+    const idHash = window.location.hash.slice(1);
+    if (!idHash) return;
     renderSpinner(recipeContainer);
     const res = await fetch(
-      'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${idHash}`
     );
     const data = await res.json();
     if (!res.ok) {
@@ -57,7 +60,6 @@ const showRecipe = async function () {
       cookingTime,
       ingredients,
     };
-    console.log(recipe);
     //Rendering this recipe in html
     const markup = `<figure class="recipe__fig">
           <img src="${recipe.image}" alt="${
@@ -162,4 +164,8 @@ const showRecipe = async function () {
     alert(err);
   }
 };
-showRecipe();
+
+//290-listening for hash change (when we change url), and load (when we copy-paste url to new window)
+['hashchange', 'load'].forEach(event =>
+  window.addEventListener(event, showRecipe)
+);
