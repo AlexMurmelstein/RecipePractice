@@ -1,0 +1,7 @@
+/node_modules/
+/src/sass/
+/src/img/
+/zflowc/
+/.prettierrc/
+/.parcel-cache/
+/dist/
