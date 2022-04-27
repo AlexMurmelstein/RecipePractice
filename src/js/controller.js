@@ -1,3 +1,4 @@
+import * as model from './model.js';
 //"url:" is the format for importing STATIC assets in Parcel2
 import icons from 'url:../img/icons.svg';
 import 'core-js/stable';
@@ -31,35 +32,14 @@ const showRecipe = async function () {
     const idHash = window.location.hash.slice(1);
     if (!idHash) return;
     renderSpinner(recipeContainer);
-    const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/${idHash}`
-    );
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(`${data.message} code: ${res.status}`);
-    }
-    //Extracting recipe details by destructuring
-    const {
-      id,
-      title,
-      publisher,
-      source_url: sourceURL,
-      image_url: image,
-      servings,
-      cooking_time: cookingTime,
-      ingredients,
-    } = data.data.recipe;
-    //Creating a new "recipe" obj using the above
-    const recipe = {
-      id,
-      title,
-      publisher,
-      sourceURL,
-      image,
-      servings,
-      cookingTime,
-      ingredients,
-    };
+
+    //Load recipe (async function hence await!)
+    await model.loadRecipe(idHash);
+
+    //The function above does not RETURN anything, it manipulates the state in the model
+    //Now we'll access that same state
+    const recipe = model.state.recipe;
+
     //Rendering this recipe in html
     const markup = `<figure class="recipe__fig">
           <img src="${recipe.image}" alt="${
