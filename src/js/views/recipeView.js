@@ -29,6 +29,13 @@ class RecipeView {
     this.#parentElement.innerHTML = '';
   }
 
+  addHandlerMethod(handler) {
+    //290-listening for hash change (when we change url), and load (when we copy-paste url to new window)
+    ['hashchange', 'load'].forEach(event =>
+      window.addEventListener(event, handler)
+    );
+  }
+
   #generateMarkup() {
     return `<figure class="recipe__fig">
     <img src="${this.#data.image}" alt="${

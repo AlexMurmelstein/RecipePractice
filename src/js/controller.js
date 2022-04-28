@@ -28,11 +28,12 @@ const controlRecipes = async function () {
 
     //Rendering this recipe in html
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
-//290-listening for hash change (when we change url), and load (when we copy-paste url to new window)
-['hashchange', 'load'].forEach(event =>
-  window.addEventListener(event, controlRecipes)
-);
+//294 publisher-subscriber, importing handler from RecipeView
+const init = function () {
+  recipeView.addHandlerMethod(controlRecipes);
+};
+init();
