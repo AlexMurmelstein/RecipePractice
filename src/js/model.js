@@ -32,5 +32,6 @@ export const loadRecipe = async function (idHash) {
     };
   } catch (err) {
     console.error(`ERROR: ${err}`);
+    throw err;
   }
 };
