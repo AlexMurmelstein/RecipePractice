@@ -32,6 +32,17 @@ const controlRecipes = async function () {
   }
 };
 
+const controlSearchResults = async function () {
+  try {
+    await model.loadSearchResults('pizza');
+    console.log(model.state.search.results);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+controlSearchResults();
+
 //294 publisher-subscriber, importing handler from RecipeView
 const init = function () {
   recipeView.addHandlerMethod(controlRecipes);
